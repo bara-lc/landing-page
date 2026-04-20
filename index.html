@@ -545,6 +545,32 @@ em.it { font-style: italic; }
 .form-input:focus { border-color: var(--gold); background: var(--white); }
 .form-input::placeholder { color: var(--ink-30); }
 
+.form-card.is-success {
+  display: flex;
+  align-items: center;
+  min-height: 420px;
+}
+
+#formSuccess {
+  width: 100%;
+  animation: fadeInUp 0.5s ease;
+}
+
+#formError {
+  animation: fadeInUp 0.35s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .log-row {
   display: grid;
   grid-template-columns: 88px 1fr;
@@ -1198,7 +1224,6 @@ footer {
       >
       <span class="nav-partner-text" style="display:none;font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);letter-spacing:0.01em;white-space:nowrap;">Petráš Rezek</span>
     </div>
-    <!-- Použití nav-cta místo btn btn-gold pro lepší kontrolu na mobilu -->
     <a href="#registrace" class="nav-cta">Požádat o místo →</a>
   </div>
 </nav>
@@ -1919,17 +1944,80 @@ footer {
           <p style="font-size:0.9rem;color:var(--accent);font-weight:600">Kredit 10 000 Kč je součástí každého vstupu. Zaplatíte za akci — a dostanete víc, než jste zaplatili.</p>
         </div>
       </div>
+
       <div class="form-card">
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:8px">Požádejte o místo</h3>
-        <p class="body" style="margin-bottom:36px">Jakmile se naplní kapacita, registraci uzavřeme.</p>
-        <div style="display:grid;gap:12px;margin-bottom:20px">
-          <input type="text" class="form-input" placeholder="Jméno a příjmení">
-          <input type="text" class="form-input" placeholder="Název firmy">
-          <input type="email" class="form-input" placeholder="Pracovní e-mail">
-          <input type="tel" class="form-input" placeholder="Telefonní číslo" required>
+        <div id="formContent">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:8px">Požádejte o místo</h3>
+          <p class="body" style="margin-bottom:36px">Jakmile se naplní kapacita, registraci uzavřeme.</p>
+
+          <form id="registrationForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="ac3cdcf0-3494-4d30-89c7-87c7ae15a3f6">
+            <input type="hidden" name="subject" value="Nová registrace – Legacy Club">
+            <input type="hidden" name="from_name" value="Legacy Club LP">
+            <input type="hidden" name="redirect" value="">
+            <input type="checkbox" name="botcheck" style="display:none;">
+
+            <div style="display:grid;gap:12px;margin-bottom:20px">
+              <input
+                type="text"
+                name="name"
+                class="form-input"
+                placeholder="Jméno a příjmení"
+                required
+              >
+              <input
+                type="text"
+                name="company"
+                class="form-input"
+                placeholder="Název firmy"
+                required
+              >
+              <input
+                type="email"
+                name="email"
+                class="form-input"
+                placeholder="Pracovní e-mail"
+                required
+              >
+              <input
+                type="tel"
+                name="phone"
+                class="form-input"
+                placeholder="Telefonní číslo"
+                required
+              >
+            </div>
+
+            <button id="submitBtn" class="btn btn-gold" style="width:100%;justify-content:center" type="submit">
+              Požádat o místo →
+            </button>
+
+            <p style="font-size:11px;color:var(--ink-30);margin-top:16px;line-height:1.6">Do 24 hodin vás budeme kontaktovat.</p>
+          </form>
         </div>
-        <button class="btn btn-gold" style="width:100%;justify-content:center">Požádat o místo →</button>
-        <p style="font-size:11px;color:var(--ink-30);margin-top:16px;line-height:1.6">Do 24 hodin vás budeme kontaktovat.</p>
+
+        <div id="formSuccess" style="display:none;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">
+            Žádost přijata
+          </p>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;line-height:1.2;margin-bottom:18px;color:var(--ink);">
+            Děkujeme.<br>
+            Tohle nebylo obyčejné odeslání formuláře.<br>
+            Spíš začátek dobrého rozhovoru.
+          </h3>
+          <p style="font-size:1rem;line-height:1.8;color:var(--ink-50);margin-bottom:18px;">
+            Vaše žádost právě přistála u nás. Podíváme se na ni a brzy se vám ozveme.
+          </p>
+          <p style="font-size:1rem;line-height:1.8;color:var(--ink-50);margin-bottom:0;">
+            A ano — právě jste udělali produktivnější krok než většina porad, které se tváří důležitě.
+          </p>
+        </div>
+
+        <div id="formError" style="display:none;margin-top:20px;padding:16px 18px;background:#FBF0ED;border-left:3px solid var(--accent);">
+          <p style="font-size:0.92rem;line-height:1.6;color:var(--accent);margin:0;">
+            Odeslání se tentokrát nepodařilo. Zkuste to prosím znovu, nebo napište přímo na bara@legacyclub.cz.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2005,6 +2093,54 @@ setTimeout(() => {
   document.querySelectorAll('#hero .fade').forEach(el => el.classList.add('in'));
   document.querySelectorAll('.hero-top-bar').forEach(el => el.classList.add('in'));
 }, 60);
+
+const registrationForm = document.getElementById('registrationForm');
+const submitBtn = document.getElementById('submitBtn');
+const formContent = document.getElementById('formContent');
+const formSuccess = document.getElementById('formSuccess');
+const formError = document.getElementById('formError');
+const formCard = document.querySelector('.form-card');
+
+if (registrationForm) {
+  registrationForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    formError.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Odesíláme...';
+
+    const formData = new FormData(registrationForm);
+
+    try {
+      const response = await fetch(registrationForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        formContent.style.display = 'none';
+        formSuccess.style.display = 'block';
+        formCard.classList.add('is-success');
+        registrationForm.reset();
+      } else {
+        formError.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Požádat o místo →';
+        console.error(result);
+      }
+    } catch (error) {
+      formError.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Požádat o místo →';
+      console.error(error);
+    }
+  });
+}
 </script>
 </body>
 </html>
