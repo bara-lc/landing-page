@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Club — Pracovní setkání majitelů firem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C4922A;
+  --gold-pale: #F5EDD8;
+  --accent: #C85A3E;
+  --accent-pale: #FBF0ED;
+  --ink: #1A1612;
+  --panel: #2E2318;
+  --panel-2: #3D3025;
+  --ink-70: #3D3630;
+  --ink-50: #6B6057;
+  --ink-30: #A89D93;
+  --ink-10: #EAE4DC;
+  --cream: #FAF8F3;
+  --cream-2: #F0EBE1;
+  --white: #FFFFFF;
+  --border: rgba(26,22,18,0.1);
+  --border-gold: rgba(166,124,61,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.serif { font-family: 'Playfair Display', Georgia, serif; }
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+h1, h2 { font-family: 'Playfair Display', Georgia, serif; }
+
+.display {
+  font-size: clamp(2.8rem, 5.5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.headline {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.subhead {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+.body-lg { font-size: 1.05rem; line-height: 1.8; color: var(--ink-50); font-weight: 400; }
+.body { font-size: 0.95rem; line-height: 1.75; color: var(--ink-50); font-weight: 400; }
+
+em.gold { color: var(--gold); font-style: normal; }
+em.accent { color: var(--accent); font-style: normal; }
+em.it { font-style: italic; }
+
+.section { padding: 112px 40px; }
+.section-sm { padding: 80px 40px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.container-sm { max-width: 760px; margin: 0 auto; }
+.container-md { max-width: 980px; margin: 0 auto; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 36px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+.btn-dark { background: var(--ink); color: var(--white); }
+.btn-dark:hover { background: var(--ink-70); transform: translateY(-1px); }
+.btn-gold { background: var(--gold); color: var(--white); }
+.btn-gold:hover { background: #8C6730; transform: translateY(-1px); }
+.btn-accent { background: var(--accent); color: var(--white); }
+.btn-accent:hover { background: #A84830; transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  color: var(--ink-70);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--ink-50); color: var(--ink); }
+
+/* ── STICKY NAV ── */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+#nav.show { transform: translateY(0); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.nav-logo-img {
+  height: 95px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav-collab-text {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-30);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+  align-self: center;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.nav-partner-img {
+  height: 80px;
+  width: auto;
+  max-width: 160px;
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Nav CTA button — compact on mobile */
+.nav-cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+.nav-cta:hover { background: #8C6730; }
+
+.section-padded {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: #C8B89A;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.problem-cell {
+  background: var(--white);
+  padding: 56px 52px;
+}
+
+.problem-cell.tone-1 { background: #FDFAF5; }
+.problem-cell.tone-2 { background: #F2EAD8; }
+.problem-cell.tone-3 { background: #DDD0B8; }
+.problem-cell.tone-4 { background: #6B5540; color: var(--white); }
+
+.problem-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.problem-cell.tone-1 .problem-number { color: rgba(166,124,61,0.18); }
+.problem-cell.tone-2 .problem-number { color: rgba(166,124,61,0.22); }
+.problem-cell.tone-3 .problem-number { color: rgba(107,85,64,0.25); }
+.problem-cell.tone-4 .problem-number { color: rgba(255,255,255,0.1); }
+
+.reframe-layout {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: #C8B89A;
+  max-width: 1200px;
+  margin: 2px auto 0;
+}
+.value-cell {
+  background: var(--cream);
+  padding: 44px 36px;
+  transition: background 0.2s;
+}
+.value-cell:hover { background: var(--white); }
+.value-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.output-list { display: grid; gap: 0; }
+.output-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s ease;
+}
+.output-row:last-child { border-bottom: none; }
+.output-row:hover { padding-left: 4px; }
+
+.output-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.output-row:hover .output-icon { background: rgba(200,90,62,0.14); }
+
+.output-text {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.format-hero {
+  background: var(--panel);
+  padding: 80px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.format-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 200px; height: 200px;
+  border-top: 1px solid rgba(166,124,61,0.2);
+  border-left: 1px solid rgba(166,124,61,0.2);
+  transform: translate(50%, 50%);
+  border-radius: 50%;
+}
+
+.format-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: #C8B89A;
+  margin-top: 2px;
+}
+.format-col {
+  background: var(--white);
+  padding: 72px clamp(40px, 6vw, 80px);
+}
+.format-col.yes { background: var(--cream); border-top: 3px solid var(--gold); }
+.format-col.no { border-top: 3px solid var(--ink-10); }
+
+.tag {
+  display: inline-block;
+  background: var(--cream-2);
+  color: var(--ink-50);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+}
+.tag.accent-tag {
+  background: var(--accent-pale);
+  color: var(--accent);
+  border-color: rgba(200, 90, 62, 0.2);
+}
+
+.net-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--ink-10);
+  max-width: 1200px;
+  margin: 2px auto 0;
+}
+.net-cell {
+  background: var(--white);
+  padding: 44px;
+  position: relative;
+}
+.net-cell.featured { background: var(--panel); }
+.net-cell-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--ink-10);
+  line-height: 1;
+  position: absolute;
+  top: 32px;
+  right: 36px;
+}
+.net-cell.featured .net-cell-num { color: rgba(255,255,255,0.06); }
+
+.expert-grid { display: grid; gap: 2px; background: var(--ink-10); }
+.expert-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0;
+  background: var(--white);
+}
+.expert-tag {
+  padding: 52px 40px;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+}
+.expert-body { padding: 52px 56px; }
+
+.bonus-wrap {
+  background: var(--panel);
+  position: relative;
+  overflow: hidden;
+}
+.bonus-wrap::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+}
+.bonus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(255,255,255,0.05);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bonus-cell { background: var(--panel); padding: 56px; }
+.bonus-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--ink-10);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.who-col { background: var(--white); padding: 56px; }
+.who-col.muted { background: var(--cream-2); }
+
+.check-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+.check-item:last-child { margin-bottom: 0; }
+.check-mark {
+  width: 22px; height: 22px; min-width: 22px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.check-mark svg { width: 10px; height: 10px; }
+.cross-mark {
+  width: 22px; height: 22px; min-width: 22px;
+  border-radius: 50%;
+  background: var(--cream-2);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+
+.quote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--ink-10);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.quote-card {
+  background: var(--white);
+  padding: 56px;
+  position: relative;
+}
+.quote-card::before {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem;
+  color: var(--accent);
+  opacity: 0.2;
+  position: absolute;
+  top: 28px; left: 44px;
+  line-height: 1;
+}
+.quote-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink-70);
+  position: relative;
+  z-index: 1;
+}
+
+.faq-grid { border: 1px solid var(--border); }
+.faq-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.faq-row:last-child { border-bottom: none; }
+.faq-q {
+  padding: 36px 44px;
+  border-right: 1px solid var(--border);
+  background: var(--white);
+}
+.faq-a {
+  padding: 36px 44px;
+  background: var(--cream);
+}
+
+.reg-layout {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 100px;
+  align-items: start;
+}
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 52px;
+  position: relative;
+}
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+}
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  background: var(--cream);
+  color: var(--ink);
+  transition: border-color 0.2s, background 0.2s;
+}
+.form-input:focus { border-color: var(--gold); background: var(--white); }
+.form-input::placeholder { color: var(--ink-30); }
+
+.log-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.log-row:last-child { border-bottom: none; }
+.log-key {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.log-val { font-size: 1rem; font-weight: 600; color: var(--ink); }
+
+#cta {
+  background: var(--cream);
+  padding: 140px 40px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: 'LC';
+  font-family: 'Playfair Display', serif;
+  font-size: 28rem;
+  font-weight: 900;
+  color: var(--panel);
+  opacity: 0.07;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.scarcity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  margin-bottom: 48px;
+}
+.scarcity-pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--panel);
+  padding: 60px 40px 40px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer-logo-img {
+  height: 64px;
+  width: auto;
+  max-width: 220px;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-partners {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.footer-partners-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+.footer-partner-logo {
+  height: 56px;
+  width: auto;
+  max-width: 180px;
+  display: block;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.footer-partner-logo:hover { opacity: 1; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+.fade { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.fade.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════
+   HERO
+   ════════════════════════════════════════ */
+#hero {
+  min-height: 88vh;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 6vh, 68px) 40px 60px;
+}
+
+.hero-top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 44px;
+}
+
+.hero-conversion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.hero-scarcity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+}
+
+.hero-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.hero-price-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.hero-price-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.hero-price-sub {
+  font-size: 11px;
+  color: var(--ink-30);
+  letter-spacing: 0.04em;
+}
+
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 560px;
+  gap: 56px;
+  align-items: center;
+  flex: 1;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-video-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: var(--panel);
+  box-shadow:
+    0 2px 0 0 var(--gold),
+    0 24px 60px rgba(26,22,18,0.14);
+}
+.hero-video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
+}
+.hero-video-caption {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--ink-30);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-video-caption::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.hero-title { margin-bottom: 24px; }
+.hero-sub { margin-bottom: 40px; max-width: 480px; }
+
+/* ── STRIPE / TICKER ── */
+.stripe {
+  background: var(--accent);
+  padding: 20px 0;
+  overflow: hidden;
+}
+.ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: ticker 35s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.stripe-item {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  flex-shrink: 0;
+  padding: 0 30px;
+}
+.stripe-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+
+/* ── LOGISTICS BAR ── */
+.hero-logistics {
+  background: var(--panel);
+  position: relative;
+}
+.hero-logistics::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  opacity: 0.75;
+}
+.hero-logistics-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.log-item {
+  padding: 26px 28px 24px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.log-item:last-child { border-right: none; }
+.log-item-key {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(196,146,42,0.7);
+}
+.log-item-val {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.3;
+}
+
+/* ── BONUS BAR ── */
+.hero-bonus-bar {
+  background: #F5EDD8;
+  border-top: 1px solid rgba(196,146,42,0.2);
+}
+.hero-bonus-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  min-height: 64px;
+}
+.bonus-bar-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  flex-shrink: 0;
+  padding: 16px 28px;
+  border-right: 1px solid rgba(196,146,42,0.28);
+  display: flex;
+  align-items: center;
+}
+.bonus-bar-content {
+  padding: 16px 28px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.bonus-bar-amt {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.bonus-bar-sub {
+  font-size: 14px;
+  color: var(--ink-50);
+  line-height: 1.5;
+}
+
+/* ── REST OF PAGE SECTIONS ── */
+.social-proof-wrap { position: relative; overflow: hidden; }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--ink-10);
+  position: relative;
+  z-index: 1;
+}
+.testimonial-card {
+  background: var(--white);
+  padding: 44px 40px;
+  position: relative;
+}
+.testimonial-card.alt { background: var(--cream-2); }
+.testimonial-card.featured { grid-column: 1 / -1; background: var(--white); }
+.testimonial-card::before {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  color: var(--gold);
+  opacity: 0.16;
+  position: absolute;
+  top: 18px; left: 26px;
+  line-height: 1;
+}
+.testimonial-text {
+  position: relative; z-index: 1;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.18rem; line-height: 1.65;
+  color: var(--ink-70); margin-bottom: 28px; max-width: 92%;
+}
+.testimonial-meta { position: relative; z-index: 1; padding-top: 18px; border-top: 1px solid var(--border); }
+.testimonial-name { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.testimonial-company { font-size: 0.92rem; color: var(--ink-50); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE — tablet
+   ══════════════════════════════════════ */
+@media (max-width: 1000px) {
+  #hero { padding: 52px 40px 52px; }
+  .hero-top-bar { margin-bottom: 32px; }
+  .hero-body { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { order: -1; max-width: 560px; }
+  .reframe-layout { grid-template-columns: 1fr; gap: 56px; }
+  .value-grid { grid-template-columns: 1fr 1fr; }
+  .expert-row { grid-template-columns: 1fr; }
+  .expert-tag { padding: 36px 40px; border-right: none; border-bottom: 1px solid var(--border); }
+  .expert-body { padding: 36px 40px; }
+  .reg-layout { grid-template-columns: 1fr; gap: 56px; }
+  .bonus-grid { grid-template-columns: 1fr; }
+  .hero-logistics-inner { grid-template-columns: repeat(3, 1fr); }
+  .hero-logistics-inner .log-item:nth-child(3) { border-right: none; }
+  .hero-logistics-inner .log-item:nth-child(4),
+  .hero-logistics-inner .log-item:nth-child(5) { border-top: 1px solid rgba(255,255,255,0.07); }
+  .hero-logistics-inner .log-item:nth-child(5) { border-right: none; }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — mobile (≤ 760px)
+   HLAVNÍ OPRAVA: nav, hero, gridy
+   ══════════════════════════════════════ */
+@media (max-width: 760px) {
+  .section { padding: 72px 20px; }
+  .section-padded { padding-left: 16px; padding-right: 16px; }
+
+  /* ── NAV MOBILE FIX ── */
+  .nav-inner {
+    padding: 0 16px;
+    min-height: 52px;
+    gap: 8px;
+  }
+
+  /* Schovat "ve spolupráci s" text a oddělovač na mobilu */
+  .nav-collab-text { display: none; }
+  .nav-divider { display: none; }
+
+  /* Logo Legacy Club */
+  .nav-logo-img {
+    height: 26px !important;
+    max-width: 110px;
+  }
+
+  /* Logo partnera (Petráš Rezek) — menší */
+  .nav-partner-img {
+    height: 20px !important;
+    max-width: 90px;
+  }
+
+  /* CTA tlačítko v navu — kompaktní, celé viditelné */
+  .nav-cta {
+    padding: 9px 14px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+
+  /* brand wrapper nesmí přetéct */
+  .nav-brand {
+    gap: 8px;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .problem-grid, .format-compare, .net-grid, .quote-grid, .who-grid, .faq-row { grid-template-columns: 1fr; }
+  .faq-q { border-right: none; border-bottom: 1px solid var(--border); }
+  .value-grid { grid-template-columns: 1fr; }
+
+  /* Hero mobile */
+  #hero { padding: 72px 20px 44px; }
+  .hero-top-bar { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+  .hero-conversion { align-items: flex-start; flex-direction: row; align-items: center; gap: 20px; }
+  .hero-price-block { align-items: flex-start; }
+  .hero-price-val { font-size: 1.3rem; }
+  .hero-body { grid-template-columns: 1fr; gap: 36px; }
+  .hero-right { order: -1; max-width: 100%; }
+
+  .format-hero { padding: 48px 20px; }
+  .problem-cell { padding: 36px 20px; }
+  .who-col { padding: 36px 20px; }
+  .quote-card { padding: 40px 20px; }
+  .bonus-cell { padding: 36px 20px; }
+  .form-card { padding: 36px 20px; }
+  .faq-q, .faq-a { padding: 24px 20px; }
+  .expert-tag, .expert-body { padding: 28px 20px; }
+  .reg-layout { grid-template-columns: 1fr; }
+  .net-cell { padding: 32px 20px; }
+
+  footer { padding: 44px 20px 28px; }
+  .footer-top { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-logo-img { height: 48px; }
+  .footer-partner-logo { height: 40px; }
+  .footer-partners { gap: 24px; }
+
+  .bonus-grid { grid-template-columns: 1fr; }
+
+  .hero-logistics-inner { grid-template-columns: 1fr 1fr; }
+  .hero-logistics-inner .log-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
+  .hero-logistics-inner .log-item:nth-child(even) { border-right: none; }
+  .hero-logistics-inner .log-item { border-top: 1px solid rgba(255,255,255,0.07); }
+  .hero-logistics-inner .log-item:nth-child(1),
+  .hero-logistics-inner .log-item:nth-child(2) { border-top: none; }
+  .log-item { padding: 14px 14px; }
+  .log-item-val { font-size: 15px; }
+
+  .hero-bonus-bar-inner { flex-direction: column; align-items: stretch; }
+  .bonus-bar-label { border-right: none; border-bottom: 1px solid rgba(196,146,42,0.28); padding: 12px 16px; }
+  .bonus-bar-content { padding: 12px 16px; }
+}
+
+@media (max-width: 480px) {
+  .nav-logo-img { height: 22px !important; max-width: 95px; }
+  .nav-partner-img { height: 17px !important; max-width: 75px; }
+  .nav-brand { gap: 6px; }
+  .nav-cta { padding: 8px 12px; font-size: 9px; }
+
+  .btn { padding: 13px 20px; font-size: 11px; }
+  .hero-conversion { flex-direction: column; gap: 12px; }
+}
+
+/* ── VÝSTUPY ── */
+.outputs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(196,146,42,0.15);
+}
+.output-card {
+  background: var(--white);
+  padding: 48px 40px 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  transition: background 0.2s ease;
+}
+.output-card:hover { background: #FDFAF5; }
+.output-card:nth-child(4),
+.output-card:nth-child(5) {
+  background: var(--cream-2);
+}
+.output-card:nth-child(4):hover,
+.output-card:nth-child(5):hover {
+  background: var(--cream);
+}
+.output-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  margin-bottom: 32px;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.output-card:hover .output-card-icon {
+  background: rgba(200,90,62,0.1);
+  color: var(--accent);
+}
+.output-card-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(196,146,42,0.12);
+  line-height: 1;
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  letter-spacing: -0.02em;
+}
+.output-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.output-card-body {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--ink-50);
+  font-weight: 400;
+}
+@media (max-width: 900px) {
+  .outputs-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .outputs-grid { grid-template-columns: 1fr; }
+  .output-card { padding: 32px 20px 36px; }
+}
+
+/* ── SOCIAL PROOF PHOTO FIX ── */
+.quote-card.photo-card {
+  padding: 0 !important;
+  min-height: 420px;
+  overflow: hidden;
+}
+.quote-card.photo-card::before {
+  display: none !important;
+  content: none !important;
+}
+.quote-card-photo-img {
+  display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV — OPRAVENO pro mobil -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img
+        src="legacy-club_horizontal.png"
+        alt="Legacy Club"
+        class="nav-logo-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      >
+      <span class="nav-logo-text" style="display:none;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:0.02em;white-space:nowrap;">Legacy Club</span>
+      <div class="nav-divider"></div>
+      <span class="nav-collab-text">ve spolupráci s</span>
+      <img
+        src="akprlogo.png"
+        alt="AK Petráš Rezek"
+        class="nav-partner-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      >
+      <span class="nav-partner-text" style="display:none;font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);letter-spacing:0.01em;white-space:nowrap;">Petráš Rezek</span>
+    </div>
+    <!-- Použití nav-cta místo btn btn-gold pro lepší kontrolu na mobilu -->
+    <a href="#registrace" class="nav-cta">Požádat o místo →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-top-bar fade">
+    <span class="eyebrow" style="letter-spacing:0.18em">Privátní setkání majitelů firem a CEO</span>
+    <div class="hero-conversion">
+      <div class="hero-scarcity">
+        <span class="scarcity-pulse"></span>
+        Zbývají poslední místa
+      </div>
+      <div class="hero-price-block">
+        <span class="hero-price-label">Vstupné</span>
+        <span class="hero-price-val">10 000 Kč</span>
+        <span class="hero-price-sub">bez DPH</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-left fade" style="transition-delay:0.08s">
+      <h1 class="display hero-title">
+        Chyby v právu<br>
+        a řízení lidí<br>
+        vás nestojí tisíce.<br>
+        <em class="it" style="color:var(--accent)">Stojí vás miliony.</em>
+      </h1>
+      <p class="body-lg hero-sub">
+        Pracovní setkání pro majitele a CEO. Během jednoho odpoledne pojmenujete slabá místa ve vlastní firmě a odnesete si konkrétní kroky k jejich řešení.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <a href="#registrace" class="btn btn-gold">Požádat o místo →</a>
+        <a href="#format" class="btn btn-outline">Jak to funguje</a>
+      </div>
+    </div>
+
+    <div class="hero-right fade" style="transition-delay:0.18s">
+      <div class="hero-video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/PyQeMSR00wQ?rel=0&modestbranding=1&color=white&autoplay=1&mute=1&loop=1&playlist=PyQeMSR00wQ"
+          title="Legacy Club — ukázka setkání"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; mute"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="hero-video-caption">Důvěrná atmosféra. Konkrétní výstupy. Lidé, kteří mluví na rovinu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOGISTICS BAR -->
+<div class="hero-logistics fade">
+  <div class="hero-logistics-inner">
+    <div class="log-item">
+      <span class="log-item-key">Datum</span>
+      <span class="log-item-val">21. května 2026</span>
+    </div>
+    <div class="log-item">
+      <span class="log-item-key">Čas</span>
+      <span class="log-item-val">14:00 – 19:00</span>
+    </div>
+    <div class="log-item">
+      <span class="log-item-key">Místo</span>
+      <span class="log-item-val">21 Sky Café, Zlín</span>
+    </div>
+    <div class="log-item">
+      <span class="log-item-key">Kapacita</span>
+      <span class="log-item-val" style="color:rgba(200,90,62,0.8)">Záměrně omezená</span>
+    </div>
+    <div class="log-item">
+      <span class="log-item-key">Vstupné</span>
+      <span class="log-item-val">10 000 Kč bez DPH</span>
+    </div>
+  </div>
+</div>
+
+<!-- BONUS BAR -->
+<div class="hero-bonus-bar fade">
+  <div class="hero-bonus-bar-inner">
+    <span class="bonus-bar-label">Bonus v ceně vstupu</span>
+    <div class="bonus-bar-content">
+      <span class="bonus-bar-amt">Kredit 10 000 Kč</span>
+      <span class="bonus-bar-sub">Na právní analýzu rizik a služby Legacy Club — v ceně každého vstupu.</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLÉM -->
+<section class="section" style="background:var(--white);padding-bottom:0">
+  <div class="container fade" style="margin-bottom:2px">
+    <div style="max-width:680px;margin-bottom:72px">
+      <span class="eyebrow" style="margin-bottom:28px">Realita</span>
+      <h2 class="headline" style="margin-top:16px;margin-bottom:24px">Největší ztráty<br>nevznikají navenek.<br><em class="gold it">Vznikají uvnitř firmy.</em></h2>
+    </div>
+  </div>
+</section>
+
+<div class="section-padded fade" style="background:var(--white);padding-top:0;padding-bottom:0">
+  <div class="problem-grid">
+    <div class="problem-cell tone-1">
+      <div class="problem-number">01</div>
+      <p style="font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:10px">Smlouvy bez řízení</p>
+      <p class="body">Smlouvy existují. Nikdo je ale aktivně neřídí — a nikdo neví, co v nich vlastně stojí.</p>
+    </div>
+    <div class="problem-cell tone-2">
+      <div class="problem-number">02</div>
+      <p style="font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:10px">Lidé jsou dražší, než jakou hodnotu firmě přinášejí</p>
+      <p class="body">Tým roste, výsledky ne. Struktura, která vypadá dobře — ale čísla říkají jiné.</p>
+    </div>
+    <div class="problem-cell tone-3">
+      <div class="problem-number">03</div>
+      <p style="font-size:1.05rem;font-weight:600;color:var(--ink-70);margin-bottom:10px">Odložená rozhodnutí</p>
+      <p style="font-size:0.95rem;line-height:1.75;color:var(--ink-50)">"Nějak to dopadne." Věta, která stojí firmu miliony — ale skutečné rozhodnutí pořád nikdo neudělal.</p>
+    </div>
+    <div class="problem-cell tone-4">
+      <div class="problem-number">04</div>
+      <p style="font-size:1.05rem;font-weight:600;color:rgba(255,255,255,0.92);margin-bottom:10px">Čísla vypadají dobře. Realita ne.</p>
+      <p style="font-size:0.95rem;line-height:1.75;color:rgba(255,255,255,0.58)">Dashboard zelený. Přitom peníze tečou jinudy — a vy to nevidíte, dokud není pozdě.</p>
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.12)">
+        <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--gold)">Tyhle věci nevidíte. Dokud není pozdě.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STRIPE -->
+<div class="stripe" style="margin:48px 0;">
+  <div class="ticker-track">
+    <span class="stripe-item">Právní rizika</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Řízení lidí</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Diagnostika firmy</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Mini mastermind</span><span class="stripe-dot"></span>
+    <span class="stripe-item">21. května 2026 · Zlín</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Záměrně omezená kapacita</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Právní rizika</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Řízení lidí</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Diagnostika firmy</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Mini mastermind</span><span class="stripe-dot"></span>
+    <span class="stripe-item">21. května 2026 · Zlín</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Záměrně omezená kapacita</span><span class="stripe-dot"></span>
+  </div>
+</div>
+
+<!-- REFRAME -->
+<section class="section" style="background:var(--cream)">
+  <div class="container">
+    <div class="reframe-layout fade">
+      <div>
+        <span class="eyebrow" style="margin-bottom:28px">Perspektiva</span>
+        <h2 class="headline" style="margin-top:16px;margin-bottom:28px">Nejde o to,<br>že byste nevěděli dost.</h2>
+        <p class="body-lg" style="margin-bottom:40px">Jde o to, kde ztrácíte přehled.</p>
+        <div style="display:grid;gap:20px">
+          <div style="display:flex;gap:20px;align-items:flex-start;padding:24px;background:var(--white);border-left:3px solid var(--gold)">
+            <div style="width:32px;min-width:32px;height:32px;background:var(--gold-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#A67C3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:4px">Operativa vám brání vidět rizika</p>
+              <p class="body" style="font-size:0.9rem">Každodenní věci spolehlivě zakrývají to, co bude bolet za 6 měsíců.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:20px;align-items:flex-start;padding:24px;background:var(--white);border-left:3px solid var(--accent)">
+            <div style="width:32px;min-width:32px;height:32px;background:var(--accent-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#C85A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:4px">Chybí pohled zvenku</p>
+              <p class="body" style="font-size:0.9rem">Lidé, kteří řeší to samé — a vidí to, co vy nevidíte.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:20px;align-items:flex-start;padding:24px;background:var(--white);border-left:3px solid var(--ink-10)">
+            <div style="width:32px;min-width:32px;height:32px;background:var(--cream-2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="#9E9890" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:4px">Věci nejsou vidět v souvislostech</p>
+              <p class="body" style="font-size:0.9rem">Právo, lidé, rozhodnutí — každé zvlášť. Spojení je teprve to, co rozhoduje.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="background:#3D3025;padding:52px 52px 48px;position:relative;overflow:hidden;border:1px solid rgba(196,146,42,0.18);border-bottom:none;box-shadow:0 8px 40px rgba(30,20,10,0.18),inset 0 1px 0 rgba(196,146,42,0.12)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0.7"></div>
+          <div style="font-family:'Playfair Display',serif;font-size:5rem;line-height:1;color:var(--gold);opacity:0.25;margin-bottom:-12px;margin-left:-4px;user-select:none;">&ldquo;</div>
+          <p style="font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:700;font-style:italic;color:rgba(255,255,255,0.93);line-height:1.45;letter-spacing:-0.01em;margin-bottom:36px">Jedno odpoledne.<br>Konkrétní kroky.<br>Reálné výsledky.</p>
+          <div style="width:40px;height:1px;background:var(--gold);opacity:0.55;margin-bottom:28px"></div>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.48);line-height:1.75;font-weight:400;max-width:320px">Tohle není „další event". Je to pracovní setkání, kde se řeší vaše firma — ne obecná teorie.</p>
+        </div>
+        <div style="background:#F5EDD8;padding:36px 52px;border:1px solid rgba(196,146,42,0.22);border-top:1px solid rgba(196,146,42,0.15);position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--gold);opacity:0.6"></div>
+          <p style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Bonus v ceně vstupu</p>
+          <p style="font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:800;color:var(--ink);margin-bottom:10px;line-height:1.2">Kredit 10 000 Kč</p>
+          <p style="font-size:0.88rem;line-height:1.7;color:var(--ink-50)">Na právní analýzu rizik a služby Legacy Club — v ceně každého vstupu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE -->
+<section style="background:var(--white);padding:0" id="value">
+  <div style="padding:80px 40px 40px;max-width:1200px;margin:0 auto" class="fade">
+    <span class="eyebrow" style="margin-bottom:24px">Co získáte</span>
+    <div style="max-width:760px">
+      <h2 class="headline" style="margin-top:16px;margin-bottom:22px">U jednoho stolu sedí lidé, kteří rozhodují.</h2>
+      <p class="body-lg" style="max-width:720px">
+        Proto se tu nemluví v obecnostech, ale o konkrétních situacích, rizicích a krocích dál.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-padded fade" style="padding-top:0;padding-bottom:0">
+    <div class="value-grid">
+      <div class="value-cell">
+        <div class="value-num">01</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Pojmenujete slabá místa</p>
+        <p class="body">Ve vlastní firmě. Ne v modelovém příkladu.</p>
+      </div>
+      <div class="value-cell">
+        <div class="value-num">02</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Uvidíte souvislosti</p>
+        <p class="body">Mezi právem, lidmi a rozhodnutími, která ovlivňují výsledek.</p>
+      </div>
+      <div class="value-cell">
+        <div class="value-num">03</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Získáte relevantní pohled zvenku</p>
+        <p class="body">Od lidí, kteří nesou podobnou odpovědnost jako vy.</p>
+      </div>
+      <div class="value-cell" style="background:var(--panel)">
+        <div style="font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--accent);line-height:1;margin-bottom:20px">04</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--white);margin-bottom:10px">Odejdete s dalším krokem</p>
+        <p style="font-size:0.95rem;line-height:1.75;color:rgba(255,255,255,0.58)">Ne s poznámkami, ale s rozhodnutími pro vlastní firmu.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:56px 40px" class="fade">
+    <a href="#registrace" class="btn btn-gold">Požádat o místo →</a>
+  </div>
+</section>
+
+<!-- VÝSTUPY -->
+<section class="section" style="background:var(--cream)">
+  <div class="container fade">
+    <div style="max-width:600px;margin-bottom:72px">
+      <span class="eyebrow" style="margin-bottom:28px">Co si odnesete</span>
+      <h2 class="headline" style="margin-top:16px">Na konci dne<br>budete mít:</h2>
+    </div>
+    <div class="outputs-grid">
+      <div class="output-card fade">
+        <div class="output-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            <path d="M11 8v6M8 11h6"/>
+          </svg>
+        </div>
+        <div class="output-card-num">01</div>
+        <h3 class="output-card-title">Mapa rizik vaší firmy</h3>
+        <p class="output-card-body">Pojmenujete slabá místa, která jste dosud přehlíželi — v právu, v lidech, v rozhodnutích.</p>
+      </div>
+      <div class="output-card fade" style="transition-delay:0.07s">
+        <div class="output-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="output-card-num">02</div>
+        <h3 class="output-card-title">Kde vám unikají peníze</h3>
+        <p class="output-card-body">Konkrétní situace ve vaší firmě — ne obecná teorie. Vidíte čísla a víte, kde jednat.</p>
+      </div>
+      <div class="output-card fade" style="transition-delay:0.14s">
+        <div class="output-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+        </div>
+        <div class="output-card-num">03</div>
+        <h3 class="output-card-title">Rozhodnutí, která nelze odkládat</h3>
+        <p class="output-card-body">Checklist kroků seřazených podle dopadu. Odcházíte s prioritami, ne s poznámkami.</p>
+      </div>
+      <div class="output-card fade" style="transition-delay:0.21s">
+        <div class="output-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="output-card-num">04</div>
+        <h3 class="output-card-title">Jiný pohled na řízení lidí</h3>
+        <p class="output-card-body">Role, odpovědnost, výsledky. Pochopíte, kde ve vašem týmu ztrácíte výkon i peníze.</p>
+      </div>
+      <div class="output-card fade" style="transition-delay:0.28s">
+        <div class="output-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div class="output-card-num">05</div>
+        <h3 class="output-card-title">Spojení, která mají smysl</h3>
+        <p class="output-card-body">Majitelé, kteří řeší totéž co vy. Bez zběsilého &bdquo;vizitkování&ldquo; – jen lidé, se kterými se vyplatí mluvit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIPE 2 -->
+<div class="stripe" style="margin:48px 0;">
+  <div class="ticker-track">
+    <span class="stripe-item">Právní rizika</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Řízení lidí</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Diagnostika firmy</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Mini mastermind</span><span class="stripe-dot"></span>
+    <span class="stripe-item">21. května 2026 · Zlín</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Záměrně omezená kapacita</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Právní rizika</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Řízení lidí</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Diagnostika firmy</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Mini mastermind</span><span class="stripe-dot"></span>
+    <span class="stripe-item">21. května 2026 · Zlín</span><span class="stripe-dot"></span>
+    <span class="stripe-item">Záměrně omezená kapacita</span><span class="stripe-dot"></span>
+  </div>
+</div>
+
+<!-- FORMÁT -->
+<div id="format">
+  <div class="format-hero fade">
+    <div>
+      <span class="eyebrow" style="margin-bottom:28px;color:rgba(196,146,42,0.8)">Formát</span>
+      <h2 class="headline" style="margin-top:16px;color:var(--white);max-width:680px">Místo obecné teorie řešíte vlastní firmu.<br><em style="color:var(--gold);font-style:italic">Konkrétní situace. Konkrétní rozhodnutí.</em></h2>
+    </div>
+  </div>
+  <div class="format-compare fade">
+    <div class="format-col no">
+      <div style="margin-bottom:44px">
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);opacity:0.7;margin-bottom:12px">Co tady nenajdete</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-0.01em">Co u nás<br>nenajdete</h3>
+      </div>
+      <div style="display:grid;gap:24px">
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;color:var(--ink-30);font-weight:500;margin-bottom:3px">Přednáška od experta</p>
+            <p style="font-size:0.82rem;color:var(--ink-30);line-height:1.6">Jednosměrný monolog, který zapomenete do týdne.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;color:var(--ink-30);font-weight:500;margin-bottom:3px">Obecné rady pro všechny</p>
+            <p style="font-size:0.82rem;color:var(--ink-30);line-height:1.6">Nic z toho se netýká přímo vaší firmy.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;color:var(--ink-30);font-weight:500;margin-bottom:3px">Networking přes vizitky</p>
+            <p style="font-size:0.82rem;color:var(--ink-30);line-height:1.6">Padesát lidí, se kterými se znovu neuvidíte.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;color:var(--ink-30);font-weight:500;margin-bottom:3px">Inspirace bez výsledků</p>
+            <p style="font-size:0.82rem;color:var(--ink-30);line-height:1.6">Motivace do pondělka. V úterý zase operativa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="format-col yes">
+      <div style="margin-bottom:44px">
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Na co se můžete těšit</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-0.01em">Na co se<br>můžete těšit</h3>
+      </div>
+      <div style="display:grid;gap:24px">
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:3px">Práce přímo na vaší firmě</p>
+            <p style="font-size:0.82rem;color:var(--ink-50);line-height:1.6">Reálné situace, reálná rizika — váš konkrétní případ.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:3px">Mini mastermind v malé skupině</p>
+            <p style="font-size:0.82rem;color:var(--ink-50);line-height:1.6">Lidé, kteří řeší totéž — a vidí to, co vy nevidíte.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:3px">Expert input ve správnou chvíli</p>
+            <p style="font-size:0.82rem;color:var(--ink-50);line-height:1.6">Právní a HR pohled tam, kde dává přímý dopad.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;margin-top:2px;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span>
+          </span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:3px">Odcházíte s akčním plánem</p>
+            <p style="font-size:0.82rem;color:var(--ink-50);line-height:1.6">Prioritizované kroky. Ne inspirace — instrukce.</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+        <span class="tag accent-tag">Diagnostika rizik</span>
+        <span class="tag accent-tag">Právní pohled</span>
+        <span class="tag">Řízení lidí</span>
+        <span class="tag">Sdílení</span>
+        <span class="tag">Networking</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NETWORKING -->
+<section class="section fade" style="background:var(--cream);padding-bottom:0">
+  <div class="container" style="margin-bottom:40px">
+    <span class="eyebrow" style="margin-bottom:28px">Networking</span>
+    <div style="max-width:720px">
+      <h2 class="headline" style="margin-top:16px;margin-bottom:20px">
+        Ne každý networking<br>
+        stojí za váš čas.<br>
+        <em class="gold it">Tento ano.</em>
+      </h2>
+      <p class="body-lg" style="max-width:640px;margin-bottom:18px">
+        Hodnota tohoto setkání nevzniká jen tématy, ale i tím, kdo sedí u stolu.
+      </p>
+      <p class="body" style="max-width:620px;color:var(--ink-70)">
+        Proto mají rozhovory větší hloubku, větší otevřenost a větší dopad. Neodcházíte jen s dojmem z příjemného odpoledne, ale s kontakty a pohledy, které mají skutečnou váhu pro další rozhodování.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-padded" style="background:var(--cream);padding-top:0;padding-bottom:0">
+    <div class="net-grid">
+      <div class="net-cell">
+        <span class="net-cell-num">01</span>
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Malá skupina</p>
+        <p style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px">U stolu sedí lidé, kteří rozhodují</p>
+        <p class="body">Ne dav anonymních kontaktů, ale majitelé a CEO, kteří nesou podobnou odpovědnost jako vy.</p>
+      </div>
+      <div class="net-cell" style="background:var(--cream-2)">
+        <span class="net-cell-num">02</span>
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Bez tlaku</p>
+        <p style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Můžete mluvit otevřeně</p>
+        <p class="body">Bez prodeje, bez póz, bez vizitkového kolečka. Jen prostor říct nahlas to, co se jinde často neříká.</p>
+      </div>
+      <div class="net-cell featured">
+        <span class="net-cell-num">03</span>
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Reálné rozhovory</p>
+        <p style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.3">Nemluví se o dojmech.<br>Mluví se o realitě.</p>
+        <p style="font-size:0.9rem;line-height:1.7;color:rgba(255,255,255,0.58)">O rozhodnutích, slepých místech a situacích, které ve firmách skutečně nastávají — ne o tom, jak by věci měly vypadat.</p>
+      </div>
+      <div class="net-cell">
+        <span class="net-cell-num">04</span>
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Relevantní spojení</p>
+        <p style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Potkáte lidi, se kterými má smysl zůstat v kontaktu</p>
+        <p class="body">Ne kvůli povinnému networkingu, ale protože si máte co říct i po skončení setkání.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding:48px 0 0;max-width:1200px">
+    <div style="max-width:760px;padding:28px 32px;background:var(--white);border-left:3px solid var(--gold);box-shadow:0 10px 30px rgba(26,22,18,0.04)">
+      <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Proto to má smysl</p>
+      <p style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;line-height:1.5;color:var(--ink);margin-bottom:10px">
+        Když u jednoho stolu sedí správní lidé, nevzniká jen networking.
+        <em class="it" style="color:var(--accent)">Vznikají lepší rozhodnutí.</em>
+      </p>
+      <p class="body" style="margin-bottom:0">A právě proto stojí za to vyhradit si na toto setkání celé odpoledne.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTI -->
+<section class="section" style="background:var(--white)">
+  <div class="container fade" style="margin-bottom:48px">
+    <span class="eyebrow" style="margin-bottom:28px">Experti</span>
+    <h2 class="headline" style="margin-top:16px">Bez teorie.<br><em class="it" style="color:var(--ink-50)">Jen to, co funguje.</em></h2>
+  </div>
+  <div class="container expert-grid fade">
+    <div class="expert-row">
+      <div class="expert-tag">
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Partner</p>
+        <p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)">AK Petráš Rezek</p>
+      </div>
+      <div class="expert-body">
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Právo v praxi</p>
+        <p class="body">Transakce, struktury, reálná rizika — bez přednášení, s přímými odpověďmi. Právní pohled na to, co skutečně rozhoduje.</p>
+      </div>
+    </div>
+    <div class="expert-row" style="background:var(--cream)">
+      <div class="expert-tag" style="background:transparent">
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Organizátor</p>
+        <p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)">Legacy Club</p>
+      </div>
+      <div class="expert-body" style="background:var(--cream)">
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Řízení lidí v praxi</p>
+        <p class="body">Rozhodování, nastavení rolí, dopad na výsledky. Zkušenosti z firem, které prošly reálnými krizemi i průlomy.</p>
+      </div>
+    </div>
+    <div class="expert-row">
+      <div class="expert-tag">
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Partner</p>
+        <p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink)">CEPA</p>
+      </div>
+      <div class="expert-body">
+        <p style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:10px">Lidské chyby v praxi</p>
+        <p class="body">Nábor, pravidla, odpovědnost a jejich dopad na firmu. Co v praxi funguje a co ne — bez příkras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS -->
+<div class="section-padded fade" style="background:var(--panel);padding-top:0;padding-bottom:0">
+  <div class="bonus-wrap">
+    <div class="bonus-grid">
+      <div class="bonus-cell">
+        <span class="eyebrow" style="margin-bottom:28px;color:rgba(166,124,61,0.7)">Přidaná hodnota</span>
+        <div class="bonus-amount" style="margin-top:16px;margin-bottom:16px">Kredit<br>10 000 Kč<br>v ceně vstupu</div>
+        <p style="font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:rgba(255,255,255,0.4)">Zaplatíte za akci, která vám v budoucnosti ušetří násobky.</p>
+      </div>
+      <div class="bonus-cell" style="display:flex;flex-direction:column;justify-content:center">
+        <div style="display:grid;gap:24px">
+          <div style="padding:28px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03)">
+            <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">AK Petráš Rezek</p>
+            <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;color:var(--white)">5 000 Kč</p>
+            <p style="font-size:0.9rem;color:rgba(255,255,255,0.45);margin-top:6px">Využijete na efektivní právní analýzu rizik ve vaší firmě.</p>
+          </div>
+          <div style="padding:28px;border:1px solid rgba(200,90,62,0.2);background:rgba(200,90,62,0.05)">
+            <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Legacy Club</p>
+            <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;color:var(--white)">5 000 Kč</p>
+            <p style="font-size:0.9rem;color:rgba(255,255,255,0.45);margin-top:6px">Uplatníte volitelně jako slevu na členství v Legacy Clubu, leadership rozvoj na Farmě Hůrka, nebo na Finanční hru.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRO KOHO -->
+<section class="section" style="padding-top:0;padding-bottom:0">
+  <div class="container" style="padding-top:80px;padding-bottom:0">
+    <span class="eyebrow" style="margin-bottom:28px">Pro koho</span>
+  </div>
+</section>
+<div class="section-padded fade" style="padding-top:0;padding-bottom:0">
+  <div class="who-grid">
+    <div class="who-col">
+      <div style="margin-bottom:40px">
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Sedí vám to?</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-0.01em">Je to<br>pro vás</h3>
+      </div>
+      <div style="display:grid;gap:22px">
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:600;color:var(--ink);margin-bottom:3px">Majitel, CEO nebo jednatel</p>
+            <p style="font-size:0.83rem;color:var(--ink-50);line-height:1.6">Nesete plnou odpovědnost za výsledky — a víte, co to obnáší.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:600;color:var(--ink);margin-bottom:3px">Chcete firmu řídit, ne hasit</p>
+            <p style="font-size:0.83rem;color:var(--ink-50);line-height:1.6">Hledáte systém, přehled a čas na to, co skutečně rozhoduje.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.06em;color:#fff;line-height:1">ANO</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:600;color:var(--ink);margin-bottom:3px">Jste připraveni pracovat, ne poslouchat</p>
+            <p style="font-size:0.83rem;color:var(--ink-50);line-height:1.6">Přijdete s otevřenou hlavou a odejdete s konkrétními kroky.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="who-col muted">
+      <div style="margin-bottom:40px">
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);opacity:0.7;margin-bottom:12px">Upřímně řečeno</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-0.01em">Není to<br>pro vás</h3>
+      </div>
+      <div style="display:grid;gap:22px">
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:500;color:var(--ink-30);margin-bottom:3px">Hledáte inspiraci, ne práci</p>
+            <p style="font-size:0.83rem;color:var(--ink-30);line-height:1.6">Tady se neposlouchají přednášky. Tady se řeší vaše firma.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:500;color:var(--ink-30);margin-bottom:3px">Nechcete otevřít kuchyni firmy</p>
+            <p style="font-size:0.83rem;color:var(--ink-30);line-height:1.6">Funguje to jen tehdy, když mluvíte na rovinu — i o věcech, které nefungují.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:18px">
+          <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin-top:1px"><span style="font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;letter-spacing:0.08em;color:#fff;line-height:1">NE</span></span>
+          <div style="padding-top:6px">
+            <p style="font-size:0.97rem;font-weight:500;color:var(--ink-30);margin-bottom:3px">Nejste ten, kdo rozhoduje</p>
+            <p style="font-size:0.83rem;color:var(--ink-30);line-height:1.6">Setkání je pro lidi, kteří mají mandát věci měnit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section class="section" style="background:var(--cream)">
+  <div class="container fade" style="margin-bottom:48px">
+    <span class="eyebrow" style="margin-bottom:0">Co říkají účastníci</span>
+  </div>
+  <div class="section-padded fade" style="padding-top:0;padding-bottom:0">
+    <div class="quote-grid">
+      <div class="quote-card">
+        <p class="quote-text">„V Legacy Clubu řešíme společné byznysové problémy otevřeně a po lidsku. Není to o prodeji, ale o důvěře, sdílení a prostoru, kde se nikdo na nic nehraje."</p>
+        <div style="margin-top:32px;width:32px;height:2px;background:var(--accent)"></div>
+        <p style="margin-top:16px;font-size:0.9rem;color:var(--ink);font-weight:600">Jan Kaše</p>
+        <p style="font-size:0.85rem;color:var(--ink-50)">Big Time</p>
+      </div>
+      <div class="quote-card" style="background:var(--cream-2)">
+        <p class="quote-text">„V Legacy Clubu hledám byznysové přátele. Chci sdílet zkušenosti a posouvat se navzájem."</p>
+        <div style="margin-top:32px;width:32px;height:2px;background:var(--gold)"></div>
+        <p style="margin-top:16px;font-size:0.9rem;color:var(--ink);font-weight:600">Pavel Herman</p>
+        <p style="font-size:0.85rem;color:var(--ink-50)">KESAT, a.s.</p>
+      </div>
+      <div class="quote-card" style="background:var(--cream-2)">
+        <p class="quote-text">„Jako majitel firmy často řešíte operativu a těžko hledáte čas na strategii. Setkání Legacy Clubu pro to vytváří ideální prostor. Když řešíte konkrétní situaci, komunita vám poradí – nebo zjistíte, že v tom nejste sami."</p>
+        <div style="margin-top:32px;width:32px;height:2px;background:var(--accent)"></div>
+        <p style="margin-top:16px;font-size:0.9rem;color:var(--ink);font-weight:600">Pavel Herceg</p>
+        <p style="font-size:0.85rem;color:var(--ink-50)">RIGANTI s.r.o.</p>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">„Setkání v Legacy Clubu jsou pro mě vždy zážitkem. Oceňuji různorodost lidí i témat – a přesto cítím, že jsme na jedné vlně. Odcházím s novými pohledy, nápady a chutí pustit se do nových věcí."</p>
+        <div style="margin-top:32px;width:32px;height:2px;background:var(--gold)"></div>
+        <p style="margin-top:16px;font-size:0.9rem;color:var(--ink);font-weight:600">Pavlína Dvořáková</p>
+        <p style="font-size:0.85rem;color:var(--ink-50)">Jazyková škola Zachová s.r.o.</p>
+      </div>
+      <div class="quote-card">
+        <p class="quote-text">„Legacy Club je pro mě místem výjimečných pracovních setkání. Oceňuji hluboké diskuze o firmě a sdílení zkušeností s lidmi, kteří přinášejí nové pohledy i tah na branku."</p>
+        <div style="margin-top:32px;width:32px;height:2px;background:var(--accent)"></div>
+        <p style="margin-top:16px;font-size:0.9rem;color:var(--ink);font-weight:600">Ivona Huňková</p>
+        <p style="font-size:0.85rem;color:var(--ink-50)">EUREGNIA, s.r.o.</p>
+      </div>
+      <div class="quote-card photo-card">
+        <img src="fotoLC.jpg" alt="Atmosféra setkání Legacy Club" class="quote-card-photo-img">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="background:var(--white)">
+  <div class="container-md fade">
+    <span class="eyebrow" style="margin-bottom:28px">Časté otázky</span>
+    <div class="faq-grid" style="margin-top:48px">
+      <div class="faq-row">
+        <div class="faq-q">
+          <p style="font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-30);margin-bottom:12px">Obava</p>
+          <p style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink)">Má smysl vyhradit si na to celé odpoledne?</p>
+        </div>
+        <div class="faq-a">
+          <p style="font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Odpověď</p>
+          <p class="body">Jedno odpoledne vám může ušetřit měsíce přehlížených chyb, odložených rozhodnutí a zbytečných ztrát. Čas do toho vložíte jednou — dopad si odnesete do každodenního řízení firmy.</p>
+        </div>
+      </div>
+      <div class="faq-row" style="border-bottom:none">
+        <div class="faq-q">
+          <p style="font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-30);margin-bottom:12px">Obava</p>
+          <p style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink)">Jak poznám, že je to setkání opravdu pro mě?</p>
+        </div>
+        <div class="faq-a">
+          <p style="font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Odpověď</p>
+          <p class="body">Pokud nesete odpovědnost za výsledky firmy, pracujete s lidmi a řešíte rozhodnutí, která mají reálný dopad, budete tady správně. Tohle setkání je pro majitele, CEO a jednatele, kteří nechtějí jen poslouchat, ale skutečně posunout vlastní firmu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRACE -->
+<section class="section" style="background:var(--cream)" id="registrace">
+  <div class="container">
+    <div class="reg-layout fade">
+      <div>
+        <span class="eyebrow" style="margin-bottom:28px">Registrace</span>
+        <h2 class="headline" style="margin-top:16px;margin-bottom:48px">21. května<br>2026</h2>
+        <div>
+          <div class="log-row"><span class="log-key">Čas</span><span class="log-val">14:00 – 19:00</span></div>
+          <div class="log-row"><span class="log-key">Místo</span><span class="log-val">21 Sky Café, Zlín</span></div>
+          <div class="log-row"><span class="log-key">Vstupné</span><span class="log-val">10 000 Kč bez DPH</span></div>
+          <div class="log-row"><span class="log-key">Kapacita</span><span class="log-val" style="color:var(--accent)">Záměrně omezená</span></div>
+        </div>
+        <div style="margin-top:48px;padding:28px;background:var(--accent-pale);border-left:3px solid var(--accent)">
+          <p style="font-size:0.9rem;color:var(--accent);font-weight:600">Kredit 10 000 Kč je součástí každého vstupu. Zaplatíte za akci — a dostanete víc, než jste zaplatili.</p>
+        </div>
+      </div>
+      <div class="form-card">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:8px">Požádejte o místo</h3>
+        <p class="body" style="margin-bottom:36px">Jakmile se naplní kapacita, registraci uzavřeme.</p>
+        <div style="display:grid;gap:12px;margin-bottom:20px">
+          <input type="text" class="form-input" placeholder="Jméno a příjmení">
+          <input type="text" class="form-input" placeholder="Název firmy">
+          <input type="email" class="form-input" placeholder="Pracovní e-mail">
+          <input type="tel" class="form-input" placeholder="Telefonní číslo" required>
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center">Požádat o místo →</button>
+        <p style="font-size:11px;color:var(--ink-30);margin-top:16px;line-height:1.6">Do 24 hodin vás budeme kontaktovat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div style="position:relative;z-index:1;max-width:760px;margin:0 auto">
+    <div class="scarcity-pill"><span class="scarcity-pulse"></span>Zbývají poslední místa</div>
+    <h2 class="headline" style="margin-bottom:20px">Nejedná se o masovou akci.<br><em class="it" style="color:var(--accent)">Kapacita je záměrně malá.</em></h2>
+    <p style="color:var(--ink-30);font-size:1rem;margin-bottom:52px">Jakmile se naplní, registrace se uzavírá.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="#registrace" class="btn btn-gold" style="font-size:13px;padding:17px 44px">Požádat o místo →</a>
+    </div>
+    <p style="font-size:12px;color:var(--ink-30);margin-top:28px;letter-spacing:0.06em">21. května 2026 · 14:00–19:00 · 21 Sky Café, Zlín</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <img
+        src="whitelegacyclub.png"
+        alt="Legacy Club"
+        class="footer-logo-img"
+        style="height:120px;"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      >
+      <span style="display:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);">Legacy Club</span>
+      <div class="footer-partners">
+        <span class="footer-partners-label">Partneři</span>
+        <img
+          src="cepawhite.png"
+          alt="CEPA"
+          class="footer-partner-logo"
+          style="height:20px;"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"
+        >
+        <span style="display:none;font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:0.06em;">CEPA</span>
+        <img
+          src="euregnia.png"
+          alt="EUREGNIA"
+          class="footer-partner-logo"
+          style="height:50px;"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"
+        >
+        <span style="display:none;font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:0.06em;">EUREGNIA</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Legacy Club. Pracovní setkání pro majitele a CEO.</p>
+      <p class="footer-copy">21. května 2026 · 21 Sky Café, Zlín</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const hero = document.getElementById('hero');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('show', window.scrollY > hero.offsetHeight * 0.35);
+}, { passive: true });
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+setTimeout(() => {
+  document.querySelectorAll('#hero .fade').forEach(el => el.classList.add('in'));
+  document.querySelectorAll('.hero-top-bar').forEach(el => el.classList.add('in'));
+}, 60);
+</script>
+</body>
+</html>
