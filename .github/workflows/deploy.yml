@@ -1,0 +1,29 @@
+name: Deploy to WEDOS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy files to WEDOS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 396287.w87.wedos.net
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: ./
+          server-dir: /www/zlin/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .github/**
